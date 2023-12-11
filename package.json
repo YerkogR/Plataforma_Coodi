@@ -1,0 +1,17 @@
+{
+  "name": "coodi2.0",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server/server.js"
+  },
+  "keywords": [],
+  "author": "YerkoG",
+  "license": "ISC",
+  "dependencies": {
+    "blockly": "^10.2.2",
+    "express": "^4.18.2",
+    "serialport": "^12.0.0"
+  }
+}

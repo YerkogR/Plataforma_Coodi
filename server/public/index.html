@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coodi_Plataform</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="blockly/blockly_compressed.js"></script>
+    <script src="blockly/blocks_compressed.js"></script>
+    <script src="blockly/arduino_compressed.js"></script>
+    <script src="blockly/msg/js/es.js"></script>
+</head>
+
+<body>
+
+    <div id="ventanaEmergente" class="ventana">
+        <label for="opciones">Selecciona un dispositivo:</label>
+        <select id="opciones">
+        </select>     
+        <br>  
+        <button onclick="ocultarVentana()">Cerrar</button>
+        <button onclick="conectarDispositivo()">Conectar</button>
+      </div>
+
+
+    <div class="container-container">
+        <div class="header" style=" display: flex; background: linear-gradient(hsl(191, 47%, 70%), #ffffff); height: 100px;" >
+            <div class="container-header" style="width: 20%; text-align: center; margin: 0.5%;">
+                <img src="assets/img/logo_PUCV.png" width="150" height="70">
+            </div>
+            <div class="container-header" style="width: 50%;  align-items: center;">
+                <h1 style="text-align: center">PROGRAMANDO A COODI</h1>
+            </div>
+            <div class="container-header" style="width: 20%; text-align: end; margin: 0.5%; margin-left: 4%">
+                <img src="assets/img/logo_coodi_2.png" width="130" height="70">
+            </div>
+        </div>
+
+        <div id="contenedor_bloques_traduccion">
+            <div id="blocklyDiv"></div>
+            <div id="traduccion_bloques">
+                <h3> Código traducido a Arduino</h3>
+                <textarea id="codigoTraducido" readonly wrap="off"></textarea>
+
+                <button id="seleccionarDispositivo" onclick="mostrarVentana()"> Conectar Dispositivo </button>
+                <div id="subir_desconectar">
+                    <button id="subirBloques" onclick="cargarCodigo()"> Subir Código </button>
+                    <button id="desconectarDispositivo" onclick="desconectarDispositivo()"> Desconectar Dispositivo </button>
+                </div>
+                
+            </div>
+        </div>
+        
+
+        <script src="script.js"></script>
+</body>
+</html>

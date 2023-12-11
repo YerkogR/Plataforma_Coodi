@@ -1,0 +1,62 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+#blocklyArea {
+  height: 99%;
+}
+
+.ventana{
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+}
+
+#contenedor_bloques_traduccion{
+  display: flex;
+}
+
+#blocklyDiv{
+  height: 86vh;
+  width: 60vw;
+}
+
+#traduccion_bloques{
+  width: 35vw;
+  margin-left: 2vw;
+}
+
+#codigoTraducido{
+  height: 83%;
+  width: 100%;
+  resize: none;
+}
+
+h3{
+  text-align: center;
+}
+
+button{
+  padding: 1%;
+  color: black;
+  font-weight: bold;
+}
+
+#subir_desconectar{
+  display: none;
+  justify-content: space-between;
+}
+
+#seleccionarDispositivo{
+  margin-left: 40%;
+  margin-top: 2%;
+}
+
