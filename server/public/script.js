@@ -1,3 +1,8 @@
+/* Este archivo contiene los ajustes las funciones de la Plataforma Web Coodi
+Autores: Yerko Gonzalez y Daniel Miranda
+ */
+
+// variable que contiene la ToolBox de la plataforma, construyendose asi la caja de categorias de los bloques
 var toolboxXML = 
 `<xml id="toolbox" style="display: none">
 <category name="Lógica">
@@ -71,7 +76,7 @@ var toolboxXML =
 </category>
 </xml>
 `
-
+// variable que contiene la definición de la ToolBox
 var workspace = Blockly.inject('blocklyDiv',
   {grid:
       {spacing: 25,
@@ -82,6 +87,7 @@ var workspace = Blockly.inject('blocklyDiv',
     trashcan: true,
   });
 
+  // Función que se encarga de la traducción de los bloques al lenguaje Arduino
 function tradicorCodigo() {
   var arduinoTextarea = document.getElementById('codigoTraducido');
   arduinoTextarea.value = `#include <Arduino.h>
@@ -91,19 +97,21 @@ function tradicorCodigo() {
 ` + Blockly.Arduino.workspaceToCode();
 }
 
+// Declaramos que por defecto en la plataforma web se muestre la traducción de los bloques
 tradicorCodigo();
 
+// Declaramos que cada vez que se agregue un bloque, se actualice la traducción de los bloques
 workspace.addChangeListener(function (event) {
   tradicorCodigo()
 });
-      
+
+// Función que muestra la ventana emergente que aparece para seleccionar un dispositivo conectado a la plataforma web
 function mostrarVentana() {
-  // Realiza una solicitud AJAX para obtener la lista de puertos
   fetch('/listPorts')
     .then(response => response.json())
     .then(data => {
       const opcionesSelect = document.getElementById('opciones');
-      opcionesSelect.innerHTML = ''; // Limpiar opciones anteriores
+      opcionesSelect.innerHTML = '';
       data.ports.forEach(port => {
         const option = document.createElement('option');
         option.value = port;
@@ -114,11 +122,13 @@ function mostrarVentana() {
 
   document.getElementById('ventanaEmergente').style.display = 'block';
 }
-  
+
+// Función que oculta la ventana emergente qye aparece para seleccionar un dispositivo
 function ocultarVentana() {
     document.getElementById('ventanaEmergente').style.display = 'none';
   }
-  
+
+// Función que se encarga de conectar la placa arduino a la plataforma web
 function conectarDispositivo() {
   const opcionesSelect = document.getElementById('opciones');
   const opcionSeleccionada = opcionesSelect.value;
@@ -133,6 +143,7 @@ function conectarDispositivo() {
   revisarConexion();
 }
 
+// Función que se encarga de tomar los valores de las variabels booleanas que entrega el servidor.
 function revisarConexion() {
   var botonSeleccionar = document.getElementById('seleccionarDispositivo');
   
@@ -163,6 +174,7 @@ function revisarConexion() {
     });
 }
 
+// Función que se encarga de comprobar la subida del código a la placa de arduino uno
 function verificarSubidaCodigo() {
   return new Promise((resolve, reject) => {
     fetch('/coodiDatos')
@@ -178,6 +190,7 @@ function verificarSubidaCodigo() {
   });
 }
 
+// Función bucle que revisa que la subida del código a la placa arduino se ha realizado
 function buclePeticionSubirCodigo() {
   return new Promise(async (resolve) => {
     let variableDeseada = false;
@@ -192,6 +205,7 @@ function buclePeticionSubirCodigo() {
   });
 }
 
+// Función que se ejecuta al presionar el botón "Subir Código", subiendo el código a la placa arduino
 function cargarCodigo() {
   
   var button = document.getElementById("subirBloques");
@@ -223,6 +237,7 @@ function cargarCodigo() {
   
 }
 
+// Función que se encarga de desconectar la placa arduino de la plataforma
 function desconectarDispositivo() {
   const desconectar = true;
   fetch('/desconectarDispositivo', {

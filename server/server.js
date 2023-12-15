@@ -1,3 +1,8 @@
+/* Este archivo contiene los ajustes del servidor de la Plataforma Web Coodi
+Autores: Yerko Gonzalez y Daniel Miranda
+ */
+
+// Declaración de constantes.
 const { SerialPort } = require('serialport')
 const { exec } = require('child_process');
 const fs = require('fs');
@@ -14,6 +19,7 @@ const port_server = 4000;
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/public'));
 
+// Declaración de Variables
 var conectado = false;
 var desconectado = false;
 var codigoSubido = false;
@@ -26,6 +32,7 @@ servidor.listen(port_server, () => {
     console.log('Servidor corriendo en puerto ', port_server);
 });
 
+// Función encargada de guardar el archivo .ino en la carpeta "codigos_arduino".
 function guardarCodigoEnArchivo(codigo, nombreArchivo, carpeta) {
   return new Promise((resolve, reject) => {
     if (!fs.existsSync(carpeta)) {
@@ -43,6 +50,8 @@ function guardarCodigoEnArchivo(codigo, nombreArchivo, carpeta) {
   });
 }
 
+// Función encargada de subir el código generado en la plataforma, a la placa arduino mediante el comando "arduino-cli compile -b arduino:avr:uno -upload"
+// que entrega Arduino CLI.
 function subirCodigo(rutaArchivo, pathSeleccionado) {
   const comando = `arduino-cli compile -b arduino:avr:uno -upload -p ${pathSeleccionado} ${rutaArchivo}`;
   return new Promise((resolve, reject) => {
@@ -68,13 +77,15 @@ function subirCodigo(rutaArchivo, pathSeleccionado) {
   });
 }
 
+// Escuchamos los puertos conectados.
 app.get('/listPorts', (req, res) => {
     SerialPort.list().then(function (ports) {
       const portNames = ports.map((port) => port.path);
       res.json({ ports: portNames });
     });
-  });
+  }); 
 
+  // Enviamos el dispositivo que queremos conectar
 app.post('/conectarDispositivo', (req, res) => {
   if (req.body['path'] != '') {
     opcionSeleccionada = req.body['path'];
@@ -103,6 +114,7 @@ app.post('/conectarDispositivo', (req, res) => {
   }
 });
 
+// Enviamos el código que se desea cargar en la placa arduino.
 app.post('/cargarCodigo', (req, res) => {
   codigoSubido = false;
   var codigoRecibido = req.body['codigo'];
@@ -120,6 +132,7 @@ app.post('/cargarCodigo', (req, res) => {
   }
 });
 
+// Enviamos el dispositivo que deseamos desconectar.
 app.post('/desconectarDispositivo', (req, res) => {
   var desconectar = req.body['descDispositivo'];
   if (desconectar == true && conectado == true){
@@ -138,6 +151,7 @@ app.post('/desconectarDispositivo', (req, res) => {
   }
 });
 
+// Escuchamos las variables que declaramos anteriormente para poder realizar funciones en la plataforma web.
 app.get('/coodiDatos', (req, res) => {
   res.json({conexion_conectado : conectado, conexion_desconectado : desconectado, codgio_cargado : codigoSubido, error_cargado : errorSubido})
 });
